@@ -15,5 +15,3 @@ class DeleteUser(DeleteUserPort):
                 raise UserNotFoundError
 
             await self._uow.commit()
-
-

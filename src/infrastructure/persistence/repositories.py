@@ -1,4 +1,4 @@
-from sqlalchemy import select, delete
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.application.ports.repositories import UserRepository
@@ -21,6 +21,8 @@ class SQLAlchemyUserRepository(UserRepository):
             select(UserModel).where(UserModel.id == user_id)
         )
         model = result.scalar_one_or_none()
+        if model is None:
+            return None
         return _to_entity(model)
 
     async def get_by_email(self, email: str) -> User | None:
